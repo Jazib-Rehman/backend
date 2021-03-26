@@ -11,6 +11,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const {
   adminRoutes,
   serviceRoutes,
+  scheduleRoutes
 } = require("./api/routes/routes");
 
 // mongodb connection
@@ -24,6 +25,10 @@ app.use(express.static("public"));
 
 app.use("/user", adminRoutes);
 app.use("/service", serviceRoutes);
+app.use("/schedule", scheduleRoutes);
 
+app.get('/', function (req, res) {
+  res.status(200).send(`version: 0.1 and port: ${PORT}`)
+})
 const PORT = process.env.PORT || 2020;
 server.listen(PORT, () => console.log("listening port 2020"));

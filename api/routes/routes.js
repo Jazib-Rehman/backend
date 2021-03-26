@@ -3,7 +3,8 @@ const auth = require('../middleware/auth');
 
 const {
   adminController,
-  serviceController
+  serviceController,
+  scheduleController
 } = require('./../controllers');
 
 const adminRoutes = express.Router();
@@ -25,6 +26,18 @@ adminRoutes.post('/create', adminController.signUp);
 // adminRoutes.post('/delete-all-data', auth, adminController.deleteAllData);
 
 
+const scheduleRoutes = express.Router();
+scheduleRoutes.get('/fetch-classes', scheduleController.fetchAllClasses)
+scheduleRoutes.get('/fetch-subjects', scheduleController.fetchAllSubjects)
+scheduleRoutes.get('/fetch-teachers', scheduleController.fetchAllTeachers)
+scheduleRoutes.post('/create-class', scheduleController.createClass)
+scheduleRoutes.post('/create-teacher', scheduleController.createTeacher)
+scheduleRoutes.post('/create-subject', scheduleController.createSubject)
+scheduleRoutes.delete('/remove-subject/:id', scheduleController.removeSubject)
+scheduleRoutes.delete('/remove-teacher/:id', scheduleController.removeTeacher)
+scheduleRoutes.delete('/remove-class/:id', scheduleController.removeClass)
+
+
 const serviceRoutes = express.Router();
 serviceRoutes.get('/fetch-artist/:id', auth, serviceController.fetchAllServicesByArtist)
 serviceRoutes.get('/fetch/:id', auth, serviceController.fetchServiceById)
@@ -35,5 +48,6 @@ serviceRoutes.delete('/remove/:id', auth, serviceController.removeServiceById)
 
 module.exports = {
   adminRoutes,
-  serviceRoutes
+  serviceRoutes,
+  scheduleRoutes
 }
