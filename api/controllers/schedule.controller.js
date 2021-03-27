@@ -34,16 +34,12 @@ class ScheduleController {
 
     async createSubject(req, res) {
         try {
-            const { classId, teacher, startTime, endTime } = req.body
-            const allSubjects = await Subject.find({ classId: classId }).exec();
-            let clashes = []
-            allSubjects.forEach(element => {
-                if ((startTime >= element.startTime && startTime < element.endTime) || (endTime > element.startTime && endTime <= element.endTime)) {
-                    clashes.push(element)
-                }
-            });
-            if (clashes.length) {
-                res.json({ error: { clashType: "timing", clashes: clashes[0] } });
+            // const { classId, teacher, startTime, endTime, day } = req.body
+            const { classId, teacher, period, day } = req.body
+            const allSubjects = await Subject.find({ classId: classId, day: day, period: period }).exec();
+
+            if (allSubjects.length) {
+                res.json({ error: { clashType: "timing", clashes: allSubjects[0] } });
             } else {
                 const data = new Subject(req.body);
                 await data.save();
@@ -51,7 +47,25 @@ class ScheduleController {
                     return res.status(400).json({ msg: 'No Subject added.' });
                 }
                 res.json({ status: "success" });
+
             }
+
+            // let clashes = []
+            // allSubjects.forEach(element => {
+            //     if ((startTime >= element.startTime && startTime < element.endTime) || (endTime > element.startTime && endTime <= element.endTime)) {
+            //         clashes.push(element)
+            //     }
+            // });
+            // if (clashes.length) {
+            //     res.json({ error: { clashType: "timing", clashes: clashes[0] } });
+            // } else {
+            //     const data = new Subject(req.body);
+            //     await data.save();
+            //     if (!data) {
+            //         return res.status(400).json({ msg: 'No Subject added.' });
+            //     }
+            //     res.json({ status: "success" });
+            // }
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -79,6 +93,51 @@ class ScheduleController {
             // if (!data.length > 0) {
             //     throw new Error('No Class Found')
             // }
+            res.json({ data });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async fetchSubjectsByClass(req, res) {
+        try {
+            let data = []
+            // const Sunday = await Subject.find({ classId: req.params.id, day: "Sunday" })
+            //     .populate("classId")
+            //     .populate("teacher")
+            //     .exec();
+            // data.push({ title: "Sunday", times: Sunday })
+            const Monday = await Subject.find({ classId: req.params.id, day: "Monday" })
+                .populate("classId")
+                .populate("teacher")
+                .exec();
+            data.push({ title: "Monday", times: Monday })
+            const Tuesday = await Subject.find({ classId: req.params.id, day: "Tuesday" })
+                .populate("classId")
+                .populate("teacher")
+                .exec();
+            data.push({ title: "Tuesday", times: Tuesday })
+            const Wednesday = await Subject.find({ classId: req.params.id, day: "Wednesday" })
+                .populate("classId")
+                .populate("teacher")
+                .exec();
+            data.push({ title: "Wednesday", times: Wednesday })
+            const Thursday = await Subject.find({ classId: req.params.id, day: "Thursday" })
+                .populate("classId")
+                .populate("teacher")
+                .exec();
+            data.push({ title: "Thursday", times: Thursday })
+            const Friday = await Subject.find({ classId: req.params.id, day: "Friday" })
+                .populate("classId")
+                .populate("teacher")
+                .exec();
+            data.push({ title: "Friday", times: Friday })
+            // const Saturday = await Subject.find({ classId: req.params.id, day: "Saturday" })
+            //     .populate("classId")
+            //     .populate("teacher")
+            //     .exec();
+            // data.push({ title: "Saturday", times: Saturday })
+
             res.json({ data });
         } catch (error) {
             res.status(500).json({ error: error.message });

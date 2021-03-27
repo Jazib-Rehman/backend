@@ -29,6 +29,7 @@ adminRoutes.post('/create', adminController.signUp);
 const scheduleRoutes = express.Router();
 scheduleRoutes.get('/fetch-classes', scheduleController.fetchAllClasses)
 scheduleRoutes.get('/fetch-subjects', scheduleController.fetchAllSubjects)
+scheduleRoutes.get('/fetch-subjects-by-class/:id', scheduleController.fetchSubjectsByClass)
 scheduleRoutes.get('/fetch-teachers', scheduleController.fetchAllTeachers)
 scheduleRoutes.post('/create-class', scheduleController.createClass)
 scheduleRoutes.post('/create-teacher', scheduleController.createTeacher)

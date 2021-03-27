@@ -31,8 +31,10 @@ const SubjectSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Teacher'
     },
-    startTime: { ...common },
-    endTime: { ...common },
+    day: { ...common },
+    period: { ...common },
+    // startTime: { ...common },
+    // endTime: { ...common },
 }, { timestamps: true });
 
 
