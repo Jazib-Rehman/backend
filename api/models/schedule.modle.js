@@ -21,6 +21,12 @@ const TeacherSchema = new Schema({
     password: { ...common },
 }, { timestamps: true });
 
+const StudentSchema = new Schema({
+    name: { ...common },
+    email: { ...common },
+    password: { ...common },
+}, { timestamps: true });
+
 const SubjectSchema = new Schema({
     name: { ...common },
     classId: {
@@ -33,17 +39,27 @@ const SubjectSchema = new Schema({
     },
     day: { ...common },
     period: { ...common },
-    // startTime: { ...common },
-    // endTime: { ...common },
+}, { timestamps: true });
+
+const UserTableSchema = new Schema({
+    user: { ...common },
+    subject: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subject'
+    },
 }, { timestamps: true });
 
 
 const Class = mongoose.model('Class', ClassSchema);
 const Teacher = mongoose.model('Teacher', TeacherSchema);
+const Student = mongoose.model('Student', StudentSchema);
+const UserTable = mongoose.model('UserTable', UserTableSchema);
 const Subject = mongoose.model('Subject', SubjectSchema);
 
 module.exports = {
     Class,
     Teacher,
+    UserTable,
+    Student,
     Subject
 }

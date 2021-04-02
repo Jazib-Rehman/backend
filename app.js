@@ -17,6 +17,25 @@ const {
 // mongodb connection
 connection;
 
+
+const axios = require("axios");
+
+function getBaseUrl() {
+  return `http://localhost:2020/`
+}
+
+const getApiAndEmit = async (socket) => {
+
+  const baseURL = getBaseUrl();
+  const tickets = await axios.get(
+    `${baseURL}schedule/check-teachers-on-leave`
+  );
+};
+
+
+interval = setInterval(() => getApiAndEmit(), 36000);
+// interval = setInterval(() => getApiAndEmit(), 2000);
+
 app.use(cors({ "Access-Control-Allow-Origin": "*" }));
 app.use(jsonParser);
 app.use(express.json({ extended: false }));
