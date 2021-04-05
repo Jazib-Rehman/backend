@@ -10,7 +10,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const {
   adminRoutes,
-  serviceRoutes,
   scheduleRoutes
 } = require("./api/routes/routes");
 
@@ -34,7 +33,6 @@ const getApiAndEmit = async (socket) => {
 
 
 interval = setInterval(() => getApiAndEmit(), 36000);
-// interval = setInterval(() => getApiAndEmit(), 2000);
 
 app.use(cors({ "Access-Control-Allow-Origin": "*" }));
 app.use(jsonParser);
@@ -43,7 +41,6 @@ app.use(urlencodedParser);
 app.use(express.static("public"));
 
 app.use("/user", adminRoutes);
-app.use("/service", serviceRoutes);
 app.use("/schedule", scheduleRoutes);
 
 app.get('/', function (req, res) {

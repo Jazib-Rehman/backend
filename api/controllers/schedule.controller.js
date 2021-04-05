@@ -30,7 +30,6 @@ class ScheduleController {
             var myClashes = []
 
             allSubjects.forEach(element => {
-                console.log(element.subject.day === subject.day && element.subject.period === subject.period)
                 if (element.subject.day === subject.day && element.subject.period === subject.period) {
                     myClashes.push(element)
                 }
